@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Портфель Кирилла Сергеевича</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  background: #333;
+  color: #fff;
+  font-size: 24px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  padding: 20px;
+}
+
+.gallery img, .gallery video {
+  width: 100%;
+  cursor: pointer;
+  object-fit: cover;
+  height: 150px;
+  border-radius: 4px;
+  transition: transform 0.3s;
+}
+
+.gallery img:hover, .gallery video:hover {
+  transform: scale(1.05);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+</style>
+</head>
+<body>
+
+<header>Портфель Кирилл Сергеевич</header>
+
+<div class="gallery">
+  <img src="https://via.placeholder.com/400x300" alt="">
+  <img src="https://via.placeholder.com/400x300/888" alt="">
+  <video src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+  <img src="https://via.placeholder.com/400x300/555" alt="">
+</div>
+
+<div class="modal" id="modal">
+  <span class="close" id="closeBtn">&times;</span>
+  <div id="modalBody"></div>
+</div>
+
+<script>
+const modal = document.getElementById('modal');
+const modalBody = document.getElementById('modalBody');
+const closeBtn = document.getElementById('closeBtn');
+
+document.querySelectorAll('.gallery img, .gallery video').forEach(item => {
+  item.addEventListener('click', () => {
+    modalBody.innerHTML = ''; // очистить
+    const clone = item.cloneNode(true);
+    clone.style.height = 'auto';
+    clone.style.maxHeight = '90%';
+    clone.style.width = 'auto';
+    clone.style.maxWidth = '90%';
+    if (clone.tagName === 'VIDEO') {
+      clone.setAttribute('controls', '');
+      clone.setAttribute('autoplay', '');
+    }
+    modalBody.appendChild(clone);
+    modal.classList.add('show');
+  });
+});
+
+closeBtn.addEventListener('click', () => {
+  modal.classList.remove('show');
+});
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.classList.remove('show');
+  }
+});
+</script>
+
+</body>
+</html>
